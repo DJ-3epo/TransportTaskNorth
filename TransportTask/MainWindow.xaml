@@ -1,0 +1,38 @@
+﻿<Window x:Class="TransportTask.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Transport Task" Height="500" Width="800">
+    <Grid>
+        <!-- Ввод количества строк (поставок) -->
+        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Text="Количество поставок (строки)" />
+        <TextBox x:Name="numRows" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="10,30,0,0" />
+
+        <!-- Ввод количества столбцов (потребностей) -->
+        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="170,10,0,0" Text="Количество потребностей (столбцы)" />
+        <TextBox x:Name="numCols" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="170,30,0,0" />
+
+        <!-- Кнопка для создания матрицы -->
+        <Button Content="Создать матрицу" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Height="30" Margin="330,30,0,0" Click="CreateMatrixButton_Click" />
+
+        <!-- Матрица стоимости -->
+        <Grid x:Name="costMatrixGrid" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,70,0,0"/>
+
+        <!-- Сумма поставок -->
+        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,300,0,0" Text="Сумма поставок" />
+        <TextBox x:Name="supplySum" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="10,320,0,0" />
+
+        <!-- Сумма потребностей -->
+        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="170,300,0,0" Text="Сумма потребностей" />
+        <TextBox x:Name="demandSum" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="170,320,0,0" />
+
+        <!-- Кнопка для решения задачи -->
+        <Button Content="Решить задачу" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Height="30" Margin="330,320,0,0" Click="SolveButton_Click" />
+
+        <!-- Вывод ошибок -->
+        <TextBlock x:Name="errorMessage" HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Margin="10,350,0,0" Foreground="Red"/>
+
+        <!-- Стоимость перевозки -->
+        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="360,355,0,0" Text="Стоимость перевозки" />
+        <TextBox x:Name="totalCost" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="330,376,0,0" IsReadOnly="True" />
+    </Grid>
+</Window>
