@@ -3,6 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Transport Task" Height="500" Width="800">
     <Grid>
+        <!-- Кнопка для загрузки данных -->
+        <Button Content="Загрузить из файла" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Height="30" Margin="500,30,0,0" Click="LoadFromFile_Click" />
+
+        <!-- Кнопка для сохранения результата -->
+        <Button Content="Сохранить результат" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Height="30" Margin="500,320,0,0" Click="SaveToFile_Click" />
+
         <!-- Ввод количества строк (поставок) -->
         <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Text="Количество поставок (строки)" />
         <TextBox x:Name="numRows" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="10,30,0,0" />

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Win32;
+using System.IO;
+
 
 namespace TransportTask
 {
@@ -226,5 +229,95 @@ namespace TransportTask
 
             return solution;
         }
+
+        private void LoadFromFile_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Text files (*.txt)|*.txt";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    string[] lines = File.ReadAllLines(openFileDialog.FileName);
+
+                    // Первая строка: количество поставок и потребностей
+                    var sizes = lines[0].Split(',');
+                    int rows = int.Parse(sizes[0]);
+                    int cols = int.Parse(sizes[1]);
+
+                    numRows.Text = rows.ToString();
+                    numCols.Text = cols.ToString();
+
+                    CreateMatrixButton_Click(null, null); // Создаём матрицу
+
+                    // Следующие строки: матрица
+                    for (int i = 0; i < rows; i++)
+                    {
+                        var values = lines[1 + i].Split(',');
+                        for (int j = 0; j < cols; j++)
+                        {
+                            costMatrixTextBoxes[i][j].Text = values[j];
+                        }
+                    }
+
+                    // Следующие две строки: supply и demand
+                    supplySum.Text = lines[1 + rows];
+                    demandSum.Text = lines[2 + rows];
+
+                    errorMessage.Text = "Данные успешно загружены.";
+                }
+                catch (Exception ex)
+                {
+                    errorMessage.Text = "Ошибка при загрузке файла: " + ex.Message;
+                }
+            }
+        }
+
+        private void SaveToFile_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Text files (*.txt)|*.txt";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    List<string> lines = new List<string>();
+
+                    int rows = costMatrixTextBoxes.Count;
+                    int cols = costMatrixTextBoxes[0].Count;
+
+                    // Размеры
+                    lines.Add($"{rows},{cols}");
+
+                    // Матрица
+                    for (int i = 0; i < rows; i++)
+                    {
+                        var row = costMatrixTextBoxes[i].Select(tb => tb.Text).ToArray();
+                        lines.Add(string.Join(",", row));
+                    }
+
+                    // Поставки и потребности
+                    lines.Add(supplySum.Text);
+                    lines.Add(demandSum.Text);
+
+                    // Результат
+                    lines.Add("Решение:");
+                    lines.Add(errorMessage.Text);
+                    lines.Add("Стоимость перевозки:");
+                    lines.Add(totalCost.Text);
+
+                    File.WriteAllLines(saveFileDialog.FileName, lines);
+                    errorMessage.Text = "Результат успешно сохранён.";
+                }
+                catch (Exception ex)
+                {
+                    errorMessage.Text = "Ошибка при сохранении файла: " + ex.Message;
+                }
+            }
+        }
+
+
     }
 }
